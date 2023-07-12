@@ -21,6 +21,12 @@ const server = setupServer(
   rest.post(
     'https://auth-provider.example.com/api/login',
     async (req, res, ctx) => {
+      if (!req.body.password) {
+        return res(ctx.status(400), ctx.json({message: 'password required'}))
+      }
+      if (!req.body.username) {
+        return res(ctx.status(400), ctx.json({message: 'username required'}))
+      }
       return await res(ctx.json({username: req.body.username}))
     },
   ),
